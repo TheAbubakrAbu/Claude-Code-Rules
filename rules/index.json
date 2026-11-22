@@ -1,0 +1,68 @@
+{
+  "rules": [
+    {
+      "id": "simulator",
+      "file": "simulator.md",
+      "summary": "Use one simulator model for every iOS build, launch, and screenshot"
+    },
+    {
+      "id": "idle-reaper",
+      "file": "idle-reaper.md",
+      "summary": "Leave simulators and servers on; a timer turns off what Claude started",
+      "companion": {
+        "name": "Claude Code Idle Reaper",
+        "url": "https://github.com/TheAbubakrAbu/Claude-Code-Idle-Reaper",
+        "required": true,
+        "detect": ["~/.claude/hooks/idle-reaper.py"]
+      }
+    },
+    {
+      "id": "build-output",
+      "file": "build-output.md",
+      "summary": "Build into the default DerivedData and reuse the existing simulator"
+    },
+    {
+      "id": "sim-audio",
+      "file": "sim-audio.md",
+      "summary": "Simulator audio is muted; record it to test sound, never unmute it",
+      "companion": {
+        "name": "Claude Code Sim Audio",
+        "url": "https://github.com/TheAbubakrAbu/Claude-Code-Sim-Audio",
+        "required": true,
+        "detect": ["~/.claude/hooks/sim-audio-guard.py"]
+      }
+    },
+    {
+      "id": "git",
+      "file": "git.md",
+      "summary": "Never commit, push, or rewrite history unless asked in that message",
+      "companion": {
+        "name": "Claude Code Git Guard",
+        "url": "https://github.com/TheAbubakrAbu/Claude-Code-Git-Guard",
+        "required": false,
+        "detect": ["~/.claude/hooks/git-guard.py"]
+      }
+    },
+    {
+      "id": "attribution",
+      "file": "attribution.md",
+      "summary": "Never credit Claude as author or co-author of a commit or PR"
+    },
+    {
+      "id": "em-dashes",
+      "file": "em-dashes.md",
+      "summary": "Never write an em dash; use real punctuation instead"
+    },
+    {
+      "id": "notifications",
+      "file": "notifications.md",
+      "summary": "Push a notification when the work is finished, never for a question",
+      "companion": {
+        "name": "Claude Code Notify",
+        "url": "https://github.com/TheAbubakrAbu/Claude-Code-Notify",
+        "required": false,
+        "detect": ["~/.claude/hooks/notify.py"]
+      }
+    }
+  ]
+}

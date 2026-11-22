@@ -1,0 +1,29 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Rule, installer, and hygiene tests (HOME is a temp folder)
+        run: python3 -m unittest discover -s tests -v
+      - name: Installer adds and removes the block in a throwaway CLAUDE.md
+        run: |
+          bash -n install.sh
+          printf '# Mine\n\nBe brief.\n' > "$RUNNER_TEMP/CLAUDE.md"
+          bash install.sh --file "$RUNNER_TEMP/CLAUDE.md" --rules all
+          grep -q 'claude-code-rules:begin' "$RUNNER_TEMP/CLAUDE.md"
+          bash install.sh --file "$RUNNER_TEMP/CLAUDE.md" --rules all | grep -q 'already up to date'
+          bash install.sh --file "$RUNNER_TEMP/CLAUDE.md" --uninstall
+          test "$(cat "$RUNNER_TEMP/CLAUDE.md")" = "$(printf '# Mine\n\nBe brief.')"
