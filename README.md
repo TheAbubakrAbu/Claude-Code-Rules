@@ -1,6 +1,6 @@
 # Claude Code Rules
 
-**A starter `CLAUDE.md` for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), where every rule exists because something went wrong without it, plus an installer that adds the rules without touching what you already wrote.** Eight rules on simulators, build output, git, attribution, writing, and notifications, four of them paired with a tool that enforces or supports them.
+**A starter `CLAUDE.md` for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), where every rule exists because something went wrong without it, plus an installer that adds the rules without touching what you already wrote.** Nine rules on simulators, build output, git, attribution, writing, notifications, and screenshots, four of them paired with a tool that enforces or supports them.
 
 [![tests](https://github.com/TheAbubakrAbu/Claude-Code-Rules/actions/workflows/tests.yml/badge.svg)](https://github.com/TheAbubakrAbu/Claude-Code-Rules/actions/workflows/tests.yml)
 
@@ -10,11 +10,11 @@ Created by **Abubakr Elmallah** on **November 22, 2026**.
 
 | | |
 |---|---|
-| **8** rules | one Markdown file each, in [rules/](rules) |
+| **9** rules | one Markdown file each, in [rules/](rules) |
 | **4** companion tools | Notify, Git Guard, Idle Reaper, Sim Audio |
 | **1** managed block | everything outside it in your `CLAUDE.md` is never changed |
 | **0** dependencies | Python 3.8+, standard library only |
-| **32** tests | run on macOS and Ubuntu on every push |
+| **34** tests | run on macOS and Ubuntu on every push |
 
 ---
 
@@ -50,6 +50,7 @@ Left to their defaults, Claude Code sessions on one Mac produced:
 - **commits and pushes nobody asked for**, because a task "seemed to require it" or a commit was approved three messages earlier;
 - **"Co-Authored-By" trailers** on commits that were supposed to carry one person's name;
 - **em dashes in everything**, from commit messages to websites;
+- **screen changes described only in words**, so seeing one meant building and opening the app by hand;
 - **notifications that arrived twice** for every question, once from a hook and once from Claude Code itself.
 
 A rule in `CLAUDE.md` is how you tell Claude about each of these once instead of every session. This repository is those rules, written so they work on anyone's machine, with an installer that keeps them in one managed block you can update or remove without touching anything you wrote yourself.
@@ -66,6 +67,7 @@ A rule in `CLAUDE.md` is how you tell Claude about each of these once instead of
 | `attribution` | Never credit Claude as author or co-author of a commit or PR | |
 | `em-dashes` | Never write an em dash; use a colon, comma, semicolon, or parentheses | |
 | `notifications` | Push a notification when the work is finished, with where it finished; never for a question | [Notify](https://github.com/TheAbubakrAbu/Claude-Code-Notify) (optional) |
+| `screenshots` | For every visible change, save a before and an after screenshot to `~/Downloads/claude-screenshots` and link them | |
 
 Read them all assembled in [examples/CLAUDE.md](examples/CLAUDE.md).
 
@@ -177,7 +179,7 @@ A rule tells Claude what to do; the companion makes sure of it, or does the work
 ## Testing
 
 ```bash
-python3 -m unittest discover -s tests -v       # 32 tests, HOME is a temp folder
+python3 -m unittest discover -s tests -v       # 34 tests, HOME is a temp folder
 ./install.sh --print --rules all               # read exactly what would be installed
 ```
 

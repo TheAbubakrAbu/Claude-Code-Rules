@@ -237,6 +237,26 @@ class Install(TempHome):
         self.assertIn("markers are broken", result.stderr)
         self.assertEqual(self.read(), broken)
 
+    def test_markers_in_the_wrong_order_are_refused(self):
+        broken = "# Mine\n\n" + rules.END + "\nstray text\n" + rules.BEGIN + "\n"
+        self.write(broken)
+        result = self.run_install()
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("markers are broken", result.stderr)
+        self.assertEqual(self.read(), broken)
+
+    def test_installing_again_keeps_what_you_wrote_around_the_block(self):
+        self.write("# Mine\n\nBe brief.\n")
+        self.run_install("--rules", "git")
+        after = "\n## Added later by hand\n\nKeep me.\n"
+        self.write(self.read() + after)
+        result = self.run_install("--rules", "git,em-dashes")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        text = self.read()
+        self.assertTrue(text.startswith("# Mine\n\nBe brief.\n\n" + rules.BEGIN), text[:80])
+        self.assertTrue(text.endswith(rules.END + "\n" + after), text[-80:])
+        self.assertIn("## Writing: never use em dashes", text)
+
     def test_print_writes_nothing(self):
         result = self.run_install("--print", "--rules", "attribution")
         self.assertEqual(result.returncode, 0, result.stderr)

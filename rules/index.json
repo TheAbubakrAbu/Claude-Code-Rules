@@ -63,6 +63,11 @@
         "required": false,
         "detect": ["~/.claude/hooks/notify.py"]
       }
+    },
+    {
+      "id": "screenshots",
+      "file": "screenshots.md",
+      "summary": "Save before and after screenshots of every visible change to Downloads"
     }
   ]
 }
